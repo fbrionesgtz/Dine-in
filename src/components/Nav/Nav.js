@@ -5,7 +5,7 @@ const Nav = (props) => {
     return <nav className={styles.nav}>
         <p className={styles["dine-in"]}>Dine-in</p>
         <YourCart
-            numOfItems={props.numOfItems}
+            totalItems={props.totalItems}
         />
     </nav>
 };
