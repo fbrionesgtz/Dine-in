@@ -6,7 +6,6 @@ const MealItemForm = (props) => {
     const [itemAmount, setItemAmount] = useState();
 
     const handleInputChange = (amount) => {
-        props.onChangeItemAmount(amount);
         setItemAmount(amount);
     };
 

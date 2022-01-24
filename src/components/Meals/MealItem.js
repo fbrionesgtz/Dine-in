@@ -4,12 +4,8 @@ import MealItemForm from "./MealItemForm";
 const MealItem = (props) => {
     const price = `$${props.price.toFixed(2)}`;
 
-    const handleAmountChange = (amount) => {
-        props.onChangeItemAmount(amount);
-    };
-
     const handleGetAmount = (amount) => {
-        props.onGetAmount(amount);
+        props.onGetAmount(amount, props.meal);
     };
 
     return <li className={styles.meal}>
@@ -20,7 +16,6 @@ const MealItem = (props) => {
         </div>
         <div>
             <MealItemForm
-                onChangeItemAmount={handleAmountChange}
                 onGetAmount={handleGetAmount}
             />
         </div>

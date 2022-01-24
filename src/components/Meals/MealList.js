@@ -3,22 +3,18 @@ import styles from "./MealList.module.css";
 import Card from "../UI/Card";
 
 const MealList = (props) => {
-    const handleAmountChange = (amount) => {
-        props.onChangeItemAmount(amount);
-    };
-
-    const handleGetAmount = (amount) => {
-        props.onGetAmount(amount);
+    const handleGetAmount = (amount, meal) => {
+        props.onGetAmount(amount, meal);
     };
 
     const mealList = props.meals.map(meal => (
         <MealItem
+            meal={meal}
             key={meal.id}
             title={meal.name}
             description={meal.description}
-            price={123}
+            price={meal.price}
             onGetAmount={handleGetAmount}
-            onChangeItemAmount={handleAmountChange}
         />
     ));
 
