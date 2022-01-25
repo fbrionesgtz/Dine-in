@@ -1,30 +1,33 @@
 import CartIcon from "../IconComponents/CartIcon";
-import styles from "../Nav/YourCart.module.css";
-import {useEffect, useState} from "react";
+import styles from "./YourCart.module.css";
+import {useContext, useEffect, useState} from "react";
+import CartContext from "../../store/cart-context";
 
 const YourCart = (props) => {
-    const [totalItemsAdded, setTotalItemsAdded] = useState(0);
+    const cartCtx = useContext(CartContext);
+    const [bump, setBump] = useState(false);
+
+    const totalItemsInCart = cartCtx.items.reduce((currentItems, item) => {
+        return currentItems + parseInt(item.amount);
+    }, 0);
 
     useEffect(() => {
-        if (props.totalItems > 0 && props.onAddAmount) {
-            let total = totalItemsAdded + parseInt(props.totalItems);
-            setTotalItemsAdded(total);
-        }
+        setBump(true);
+    }, [totalItemsInCart]);
 
-        return () => {
-            props.onCleanUp();
-        }
-    }, [props, totalItemsAdded]);
+    const handleEndBump = () => {
+        setBump(false);
+    };
 
     const handleOpenCart = () => {
-        props.onOpenCart()
+        props.onOpenCart();
     }
 
     return <button className={styles.button} onClick={handleOpenCart}>
                 <CartIcon color="white" height="1.35rem" width="1.35rem"/>
                 <p className={styles.label}>Your Card</p>
-                <div className={`${styles.badge} ${props.onAddAmount ? styles.bump : ""}`}>
-                    {totalItemsAdded}
+                <div className={`${styles.badge} ${bump ? styles.bump : ""}`} onAnimationEnd={handleEndBump}>
+                    {totalItemsInCart}
                 </div>
             </button>;
 };

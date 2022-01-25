@@ -7,7 +7,7 @@ const Input = (props) => {
 
     return <div className={styles.input}>
         <label>{props.label}</label>
-        <input type={props.type} onChange={handleInputChange}/>
+        <input type={props.type} min={props.min} onChange={handleInputChange}/>
     </div>
 };
 

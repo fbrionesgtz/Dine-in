@@ -1,5 +1,5 @@
 import styles from "./Nav.module.css";
-import YourCart from "../Cart/YourCart";
+import YourCart from "../../Cart/YourCart";
 import React from "react";
 
 const Nav = (props) => {
@@ -10,8 +10,6 @@ const Nav = (props) => {
     return <nav className={styles.nav}>
         <p className={styles["dine-in"]}>Dine-in</p>
         <YourCart
-            totalItems={props.totalItems}
-            onAddAmount={props.onAddAmount}
             onCleanUp={props.onCleanUp}
             onOpenCart={handleOpenCart}
         />

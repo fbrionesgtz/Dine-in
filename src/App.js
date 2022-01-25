@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import Nav from "./components/Nav/Nav";
-import Jumbotron from "./components/Jumbotron/Jumbotron";
+import Nav from "./components/UI/Nav/Nav";
+import Jumbotron from "./components/UI/Jumbotron/Jumbotron";
 import MealList from "./components/Meals/MealList";
 import Cart from "./components/Cart/Cart";
+import CartContextProvider from "./store/CartContextProvider";
 
 const MEALS = [
     {
@@ -32,38 +33,7 @@ const MEALS = [
 ];
 
 function App() {
-    const [mealsInCart, setMealsInCart] = useState([]);
-    const [totalItems, setTotalItems] = useState(0);
-    const [addAmount, setAddAmount] = useState(false);
     const [showCart, setShowCart] = useState(false);
-
-    const handleItemAmount = (amount, meal) => {
-        setTotalItems(amount);
-        setAddAmount(true);
-        addMealToCart(amount ,meal);
-    };
-
-    const addMealToCart = (amount ,meal) => {
-        if(mealsInCart.length > 0) {
-            mealsInCart.forEach(m => {
-                if(m.id === meal.id && m.hasOwnProperty("amount")) {
-                    m.amount = parseInt(m.amount) + parseInt(amount);
-                }
-            });
-        }
-
-        if (!meal.hasOwnProperty("amount")) {
-            meal.amount = amount;
-        }
-
-        setMealsInCart((prevMeals) => {
-            return [...prevMeals, meal];
-        });
-    }
-
-    const handleAmountAdded = () => {
-        setAddAmount(false);
-    }
 
     const handleOpenCart = () => {
         setShowCart(true);
@@ -78,26 +48,21 @@ function App() {
     };
 
     return (
-        <React.Fragment>
+        <CartContextProvider>
             {(showCart &&
                 <Cart
-                    mealsInCart={mealsInCart}
                     onCloseCart={handleCloseCart}
                     onOrder={handleOrder}
                 />
             )}
             <Nav
-                totalItems={totalItems}
-                onAddAmount={addAmount}
-                onCleanUp={handleAmountAdded}
                 onOpenCart={handleOpenCart}
             />
             <Jumbotron/>
             <MealList
                 meals={MEALS}
-                onGetAmount={handleItemAmount}
             />
-        </React.Fragment>
+        </CartContextProvider>
     );
 }
 

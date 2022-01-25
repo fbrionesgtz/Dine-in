@@ -1,10 +1,14 @@
 import MealItem from "./MealItem";
 import styles from "./MealList.module.css";
-import Card from "../UI/Card";
+import Card from "../UI/Card/Card";
+import CartContext from "../../store/cart-context";
+import {useContext} from "react";
 
 const MealList = (props) => {
+    const cartContext = useContext(CartContext);
+
     const handleGetAmount = (amount, meal) => {
-        props.onGetAmount(amount, meal);
+        cartContext.addItem(amount, meal);
     };
 
     const mealList = props.meals.map(meal => (

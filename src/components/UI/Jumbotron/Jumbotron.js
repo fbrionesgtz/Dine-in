@@ -1,6 +1,6 @@
 import styles from "./Jumbotron.module.css";
-import mealsImage from "../../img/meals.jpg";
-import MealsSummary from "../Meals/MealsSummary";
+import mealsImage from "../../../img/meals.jpg";
+import MealsSummary from "../../Meals/MealsSummary";
 
 const Jumbotron = () => {
     return <div>

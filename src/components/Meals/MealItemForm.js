@@ -1,4 +1,4 @@
-import Input from "../Input/Input";
+import Input from "../UI/Input/Input";
 import styles from "./MealItemForm.module.css";
 import {useState} from "react";
 
@@ -17,6 +17,7 @@ const MealItemForm = (props) => {
         <Input
             label="Amount"
             type="number"
+            min={1}
             onChange={handleInputChange}
         />
         <button type="button" onClick={handleSubmitAmount}>+ Add</button>
