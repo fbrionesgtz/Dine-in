@@ -16,6 +16,7 @@ const Cart = (props) => {
     };
 
     const mealsInCart = (
+        cartCtx.items.length < 1 ? <p className={styles["empty-cart"]}>Your cart is empty</p> :
         <ul className={styles["cart-items"]}>
             {cartCtx.items.map(meal => (
                 <CartItem
@@ -30,8 +31,6 @@ const Cart = (props) => {
             ))}
         </ul>
     );
-
-
 
     const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
 
@@ -48,7 +47,7 @@ const Cart = (props) => {
         {mealsInCart}
         <div className={styles.total}>
             <span>Total Amount</span>
-            <span>{totalAmount}</span>
+            <span>{totalAmount !== "0" ? "$0.00" : totalAmount}</span>
         </div>
         <div className={styles.actions}>
             <button className={styles["button--alt"]} onClick={handleCloseCart}>Close</button>
