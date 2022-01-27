@@ -10,7 +10,9 @@ const MealItemForm = (props) => {
     };
 
     const handleSubmitAmount = () => {
-      props.onGetAmount(itemAmount);
+        if(!isNaN(itemAmount)){
+            props.onGetAmount(itemAmount);
+        }
     };
 
     return <form className={styles.form}>

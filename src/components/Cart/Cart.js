@@ -13,7 +13,7 @@ const Cart = (props) => {
 
     const handleAddItem = (meal) => {
         cartCtx.addItem(1, meal)
-    }
+    };
 
     const mealsInCart = (
         <ul className={styles["cart-items"]}>

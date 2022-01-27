@@ -1,61 +1,76 @@
 import CartContext from "./cart-context";
-import {useState} from "react";
+import {useReducer} from "react";
 
-const CartContextProvider = (props) => {
-    const [mealsInCart, setMealsInCart] = useState([]);
-
-    const addMealToCart = (amount, meal) => {
-        if (mealsInCart.length > 0 && containsObject(meal, mealsInCart)) {
-            let i = mealsInCart.findIndex(m => {
-                return m === meal;
+const mealsReducer = (state, action) => {
+    if (action.type === "addItem") {
+        if (state.items.length > 0 && containsObject(action.meal, state.items)) {
+            let i = state.items.findIndex(m => {
+                return m === action.meal;
             });
 
-            return mealsInCart[i].amount = parseInt(mealsInCart[i].amount) + parseInt(amount);
+            state.items[i].amount = parseInt(state.items[i].amount) + parseInt(action.amount);
+            return {items: [...state.items]};
         }
 
-        if (!meal.hasOwnProperty("amount")) {
-            meal.amount = amount;
+        if (!action.meal.hasOwnProperty("amount")) {
+            action.meal.amount = action.amount;
         }
 
-        setMealsInCart((prevMeals) => {
-            return [...prevMeals, meal];
+        return {items: [...state.items, action.meal]};
+    }
+
+    if (action.type === "removeItem") {
+        let i = state.items.findIndex(m => {
+            return m.id === action.mealId;
         });
+
+        if (state.items[i].amount > 1) {
+            --state.items[i].amount;
+            return {items: state.items};
+        } else if (state.items[i].amount === 1) {
+            return {
+                items: state.items.filter(m => {
+                    return m.id !== action.mealId;
+                })
+            };
+        }
+    }
+};
+
+const containsObject = (obj, list) => {
+    for (let x in list) {
+        if (list.hasOwnProperty(x) && list[x] === obj) {
+            return true;
+        }
+    }
+    return false;
+}
+
+const CartContextProvider = (props) => {
+    const [mealsInCart, dispatchMealsInCart] = useReducer(mealsReducer, {
+        items: []
+    });
+
+    const addMealToCart = (amount, meal) => {
+        dispatchMealsInCart({type: "addItem", amount: amount, meal: meal});
     };
 
     const removeItemFromCart = (id) => {
-        let i = mealsInCart.findIndex(m => {
-            return m.id === id;
-        });
-
-        if (mealsInCart[i].amount > 1) {
-            return mealsInCart[i].amount - 1;
-        }
-
-        setMealsInCart(mealsInCart.filter(m => {
-            return m.id !== id;
-        }));
+        dispatchMealsInCart({type: "removeItem", mealId: id});
     };
 
-    const containsObject = (obj, list) => {
-        for (let x in list) {
-            if (list.hasOwnProperty(x) && list[x] === obj) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    const totalAmount = mealsInCart.reduce((currentAmount, item) => {
-        return currentAmount + (item.price * item.amount)
+    const totalAmount = mealsInCart.items.reduce((currentAmount, item) => {
+        return currentAmount + (item.price * item.amount);
     }, 0);
 
-
     const cartContext = {
-        items: mealsInCart,
+        items: mealsInCart.items,
         totalAmount: totalAmount,
         addItem: addMealToCart,
         removeItem: removeItemFromCart
     };
+
+    console.log(mealsInCart.items);
 
     return <CartContext.Provider value={cartContext}>
         {props.children}
