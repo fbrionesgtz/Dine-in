@@ -41,6 +41,10 @@ const mealsReducer = (state, action) => {
 
         return {items: updatedItems, totalAmount: totalAmount};
     }
+
+    if(action.type === "clear") {
+        return {items: [], totalAmount: 0}
+    }
 };
 
 const CartContextProvider = (props) => {
@@ -57,11 +61,16 @@ const CartContextProvider = (props) => {
         dispatchMealsInCart({type: "removeItem", mealId: id});
     };
 
+    const clearCart = () => {
+      dispatchMealsInCart({type: "clear"});
+    };
+
     const cartContext = {
         items: mealsInCart.items,
         totalAmount: mealsInCart.totalAmount,
         addItem: addMealToCart,
-        removeItem: removeItemFromCart
+        removeItem: removeItemFromCart,
+        clearCart: clearCart
     };
 
     return <CartContext.Provider value={cartContext}>
