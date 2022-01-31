@@ -47,7 +47,7 @@ const Cart = (props) => {
         {mealsInCart}
         <div className={styles.total}>
             <span>Total Amount</span>
-            <span>{totalAmount !== "0" ? "$0.00" : totalAmount}</span>
+            <span>{totalAmount}</span>
         </div>
         <div className={styles.actions}>
             <button className={styles["button--alt"]} onClick={handleCloseCart}>Close</button>

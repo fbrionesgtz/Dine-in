@@ -24,7 +24,9 @@ const MealList = (props) => {
 
     return <section className={styles.meals}>
         <Card>
-            <ul>{mealList}</ul>
+            {props.isLoading && <ul><p>Loading...</p></ul>}
+            {props.error && <ul><p>{props.error}</p></ul>}
+            {!props.isLoading && !props.error && <ul>{mealList}</ul>}
         </Card>
     </section>;
 };

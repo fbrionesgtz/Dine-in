@@ -27,7 +27,7 @@ const mealsReducer = (state, action) => {
             return m.id === action.mealId;
         });
 
-        const totalAmount = state.totalAmount - state.items[i].price;
+        const totalAmount = state.totalAmount.toFixed(2) - state.items[i].price.toFixed(2);
         let updatedItems;
 
         if (parseInt(state.items[i].amount) === 1) {
