@@ -11,6 +11,19 @@
     padding: 0;
 }
 
+.isLoading {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+.error {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: #960000;
+}
+
 @keyframes meals-appear {
     from {
         opacity: 0;

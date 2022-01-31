@@ -24,8 +24,8 @@ const MealList = (props) => {
 
     return <section className={styles.meals}>
         <Card>
-            {props.isLoading && <ul><p>Loading...</p></ul>}
-            {props.error && <ul><p>{props.error}</p></ul>}
+            {props.isLoading && <ul><p className={styles.isLoading}>Loading...</p></ul>}
+            {props.error && <ul className={styles.error}><p>Something went wrong</p></ul>}
             {!props.isLoading && !props.error && <ul>{mealList}</ul>}
         </Card>
     </section>;
