@@ -9,4 +9,19 @@ It will also allow them to delete items from their cart and place an order.
 
 # Technologies
 
-React.js
+* React.js
+* Firebase
+
+## Installation
+1. Clone the repo
+   ```sh
+   git clone https://github.com/fbrionesgtz/Dine-in.git
+   ```
+2. Install NPM packages
+   ```sh
+   npm install
+   ```
+3. Start server
+   ```sh
+   npm start
+   ```
