@@ -5,11 +5,13 @@ import MealList from "./components/Meals/MealList";
 import Cart from "./components/Cart/Cart";
 import CartContextProvider from "./store/CartContextProvider";
 import useHttp from "./hooks/use-http";
+import SignIn from "./components/auth/SignIn";
 
 function App() {
     const [meals, setMeals] = useState([]);
     const [showCart, setShowCart] = useState(false);
-    const {isLoading, error, sendRequest: fetchMeals} = useHttp();
+    const [showSignInForm, setShowSignInForm] = useState(false);
+    const {isLoading, error, sendRequest} = useHttp();
 
     useEffect(() => {
         const transformMeals = (meals) => {
@@ -25,31 +27,41 @@ function App() {
             setMeals(loadedMeals);
         };
 
-        fetchMeals({url: "https://react-http-37f5b-default-rtdb.firebaseio.com/meals.json"}, transformMeals);
-    }, [fetchMeals]);
+        sendRequest({url: "https://react-http-37f5b-default-rtdb.firebaseio.com/meals.json"}, transformMeals);
+    }, [sendRequest]);
 
-    const handleOpenCart = () => {
-        setShowCart(true);
+    const handleShowCart = () => {
+        setShowCart(prevState => {
+            return !prevState;
+        });
     };
 
-    const handleCloseCart = () => {
-        setShowCart(false);
-    };
+    const handleShowSignInForm = () => {
+        setShowSignInForm(prevState => {
+            return !prevState;
+        })
+    }
 
     const handleOrder = () => {
-        console.log("Ordering...")
+
     };
 
     return (
         <CartContextProvider>
-            {(showCart &&
-                <Cart
-                    onCloseCart={handleCloseCart}
-                    onOrder={handleOrder}
-                />
-            )}
+            {showSignInForm &&
+            <SignIn
+                onShowSignInForm={handleShowSignInForm}
+            />
+            }
+            {showCart &&
+            <Cart
+                onCloseCart={handleShowCart}
+                onOrder={handleOrder}
+            />
+            }
             <Nav
-                onOpenCart={handleOpenCart}
+                onOpenCart={handleShowCart}
+                onOpenSignInForm={handleShowSignInForm}
             />
             <Jumbotron/>
             <MealList

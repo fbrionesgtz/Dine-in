@@ -25,7 +25,7 @@ const YourCart = (props) => {
 
     return <button className={styles.button} onClick={handleOpenCart}>
                 <CartIcon color="white" height="1.35rem" width="1.35rem"/>
-                <p className={styles.label}>Your Card</p>
+                <p className={styles.label}>Your Cart</p>
                 <div className={`${styles.badge} ${bump ? styles.bump : ""}`} onAnimationEnd={handleEndBump}>
                     {totalItemsInCart}
                 </div>

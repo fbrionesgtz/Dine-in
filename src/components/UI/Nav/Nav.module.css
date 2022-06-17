@@ -20,3 +20,22 @@
     font-size: 2rem;
 }
 
+.navContent {
+    display: flex;
+    gap: 1rem;
+}
+
+.btnSignIn {
+    font: inherit;
+    font-weight: bold;
+    color: white;
+    background-color: #4d1601;
+    border: none;
+    border-radius: 25px;
+    padding: 1rem 2rem;
+}
+
+.btnSignIn:hover {
+    background-color: #2c0d00;
+    cursor: pointer;
+}

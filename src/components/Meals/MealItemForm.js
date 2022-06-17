@@ -19,7 +19,7 @@ const MealItemForm = (props) => {
         <Input
             label="Amount"
             type="number"
-            min={1}
+            min={0}
             onChange={handleInputChange}
         />
         <button type="button" onClick={handleSubmitAmount}>+ Add</button>
