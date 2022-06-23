@@ -23,9 +23,25 @@
 }
 
 .actions {
+    position: relative;
     display: flex;
     justify-content: flex-end;
     gap: 1rem;
+}
+
+.actions a {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    text-align: left;
+    height: fit-content;
+}
+
+.actions a:hover {
+    cursor: pointer;
+    color: #92320c;
+    border-bottom: 1px solid #92320c;
+    transform: translateY(-5px);
 }
 
 .actions button {
@@ -70,4 +86,8 @@
 .invalid input {
     border-color: #aa0b20;
     background-color: #ffeff1;
+}
+
+.error {
+    color: #ca3e51;
 }

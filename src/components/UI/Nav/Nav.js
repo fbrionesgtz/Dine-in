@@ -5,8 +5,13 @@ import AuthContext from "../../../store/auth-context";
 
 const Nav = (props) => {
     const authCtx = useContext(AuthContext);
+
     const handleOpenCart = () => {
         props.onOpenCart();
+    }
+
+    const handleOpenAccount = () => {
+        props.onOpenAccount();
     }
 
     const handleSignInSignOut = () => {
@@ -15,7 +20,7 @@ const Nav = (props) => {
             return;
         }
 
-        authCtx.user.logOut();
+        handleOpenAccount();
     }
 
     return <nav className={styles.nav}>
@@ -28,7 +33,7 @@ const Nav = (props) => {
             <button
                 className={styles.btnSignIn}
                 onClick={handleSignInSignOut}
-            >{authCtx.isLoggedIn ? "Sign Out" : "Sign In"}</button>
+            >{authCtx.isLoggedIn ? "Account" : "Sign In"}</button>
         </div>
     </nav>
 };

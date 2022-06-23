@@ -5,9 +5,11 @@ import CartContext from "../../store/cart-context";
 import {Fragment, useContext, useState} from "react";
 import Checkout from "./Checkout/Checkout";
 import useHttp from "../../hooks/use-http";
+import AuthContext from "../../store/auth-context";
 
 const Cart = (props) => {
     const cartCtx = useContext(CartContext);
+    const authCtx = useContext(AuthContext);
     const {isLoading, error, sendRequest} = useHttp();
     const [didSubmit, setDidSubmit] = useState(false);
     const [showCheckOut, setShowCheckout] = useState();
@@ -43,21 +45,38 @@ const Cart = (props) => {
         props.onCloseCart();
     };
 
+    const handleShowSignInForm = () => {
+        props.onShowSignInForm();
+    }
+
     const handleOrder = () => {
         setShowCheckout(true);
     };
 
     const handleSubmitOrder = (userData) => {
+        if (!localStorage.getItem("isLoggedIn")) {
+            handleCloseCart();
+            handleShowSignInForm();
+            authCtx.user.requireLogIn();
+            return;
+        }
+
+        const orderId = Date.now();
         sendRequest({
-            url: "https://react-http-37f5b-default-rtdb.firebaseio.com/orders.json",
-            method: "POST",
+            url: `https://react-http-37f5b-default-rtdb.firebaseio.com/orders/${authCtx.user.id}.json`,
+            method: "PATCH",
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: {user: userData, orderItems: cartCtx.items}
+            body: {
+                [orderId]: {
+                    user: userData,
+                    orderItems: cartCtx.items
+                }
+            }
         });
 
-        if(!error){
+        if (!error) {
             setDidSubmit(true);
         }
 

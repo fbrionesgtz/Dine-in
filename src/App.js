@@ -5,12 +5,14 @@ import MealList from "./components/Meals/MealList";
 import Cart from "./components/Cart/Cart";
 import CartContextProvider from "./store/CartContextProvider";
 import useHttp from "./hooks/use-http";
-import SignIn from "./components/auth/SignIn";
+import SignIn from "./components/Auth/SignIn";
+import Account from "./components/Account/Account";
 
 function App() {
     const [meals, setMeals] = useState([]);
     const [showCart, setShowCart] = useState(false);
     const [showSignInForm, setShowSignInForm] = useState(false);
+    const [showAccount, setShowAccount] = useState(false);
     const {isLoading, error, sendRequest} = useHttp();
 
     useEffect(() => {
@@ -39,7 +41,13 @@ function App() {
     const handleShowSignInForm = () => {
         setShowSignInForm(prevState => {
             return !prevState;
-        })
+        });
+    }
+
+    const handleShowAccount = () => {
+        setShowAccount(prevState => {
+            return !prevState;
+        });
     }
 
     const handleOrder = () => {
@@ -56,11 +64,18 @@ function App() {
             {showCart &&
             <Cart
                 onCloseCart={handleShowCart}
+                onShowSignInForm={handleShowSignInForm}
                 onOrder={handleOrder}
             />
             }
+            {showAccount &&
+                <Account
+                onCloseAccount={handleShowAccount}
+                />
+            }
             <Nav
                 onOpenCart={handleShowCart}
+                onOpenAccount={handleShowAccount}
                 onOpenSignInForm={handleShowSignInForm}
             />
             <Jumbotron/>

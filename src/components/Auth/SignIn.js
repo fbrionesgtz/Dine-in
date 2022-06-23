@@ -1,11 +1,12 @@
 import SignInForm from "./SignInForm";
 import Modal from "../UI/Modal/Modal";
 import useHttp from "../../hooks/use-http";
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import AuthContext from "../../store/auth-context";
 
 const SignIn = (props) => {
-    const {isLoading, error, sendRequest} = useHttp();
+    const [validLogin, setValidLogin] = useState();
+    const {sendRequest} = useHttp();
     const authCtx = useContext(AuthContext);
 
     const handleShowSignInForm = () => {
@@ -13,17 +14,17 @@ const SignIn = (props) => {
     }
 
     const handleSubmit = (data) => {
-        console.log(data);
         switch (data.action) {
             case "Sign In":
-                const handleLogIn = (users) => {
-                    authCtx.user.logIn(users, data);
+                const handleLogIn = async (users) => {
+                    const login = await authCtx.user.logIn(users, data);
+                    setValidLogin(login);
                 }
+
                 sendRequest({url: "https://react-http-37f5b-default-rtdb.firebaseio.com/users.json"}, handleLogIn);
                 break;
             case "Create Account":
                 const userId = Date.now();
-                console.log(userId);
                 sendRequest({
                     url: "https://react-http-37f5b-default-rtdb.firebaseio.com/users.json",
                     method: "PATCH",
@@ -36,16 +37,21 @@ const SignIn = (props) => {
                         }
                     }
                 });
+
+                handleShowSignInForm();
                 break;
         }
     }
 
-    console.log(authCtx.isLoggedIn);
+    if(validLogin && authCtx.isLoggedIn) {
+        handleShowSignInForm();
+    }
 
     return <Modal onClickBackdrop={handleShowSignInForm}>
         <SignInForm
             onShowSignInForm={handleShowSignInForm}
             onSubmit={handleSubmit}
+            validLoggin={validLogin}
         />
     </Modal>
 }
