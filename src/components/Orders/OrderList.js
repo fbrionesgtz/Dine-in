@@ -1,8 +1,9 @@
+import styles from "./OrderList.module.css";
 import Order from "./Order";
 
 const OrderList = (props) => {
-    return <div>
-        <h2>Orders</h2>
+    return <div className={styles.orderList}>
+        <h2>{props.orders.length === 0 ? "There are no orders" : "Orders"}</h2>
         {props.orders.map(order => (
           <Order
               key={order.id}

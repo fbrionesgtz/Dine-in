@@ -1,0 +1,17 @@
+.orderItem {
+    display: flex;
+    gap: 1rem;
+}
+
+.itemDescription p {
+    margin: 0;
+}
+
+.itemDescription p:first-child {
+    font-weight: bold;
+}
+
+.itemDescription p:nth-child(2){
+    font-weight: lighter;
+    font-style: italic;
+}

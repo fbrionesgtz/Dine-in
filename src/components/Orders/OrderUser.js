@@ -1,10 +1,12 @@
+import {Fragment} from "react";
+
 const OrderUser = (props) => {
-    return <div>
+    return <Fragment>
         <p>{props.name}</p>
         <p>{props.street}</p>
         <p>{props.city}</p>
         <p>{props.pCode}</p>
-    </div>
+    </Fragment>
 }
 
 export default OrderUser;

@@ -1,12 +1,12 @@
 import Modal from "../UI/Modal/Modal";
-import {useContext, useEffect, useState} from "react";
+import {Fragment, useContext, useEffect, useState} from "react";
 import AuthContext from "../../store/auth-context";
 import OrderList from "../Orders/OrderList";
 import useHttp from "../../hooks/use-http";
+import styles from "./Account.module.css";
 
 const Account = (props) => {
     const authCtx = useContext(AuthContext);
-    const [viewOrders, setViewOrders] = useState();
     const [orders, setOrders] = useState([]);
     const {sendRequest} = useHttp();
 
@@ -59,21 +59,13 @@ const Account = (props) => {
         handleCloseAccount();
     }
 
-    const handleViewOrders = () => {
-        setViewOrders(true);
-    }
-
     return <Modal onClickBackdrop={handleCloseAccount}>
-        <div>
-            {viewOrders &&
+        <Fragment>
             <OrderList
                 orders={orders}
             />
-            }
-            {!viewOrders &&
-            <button onClick={handleViewOrders}>View Orders</button>}
-            <button onClick={handleSignOut}>Sign Out</button>
-        </div>
+            <button className={styles.btn} onClick={handleSignOut}>Sign Out</button>
+        </Fragment>
     </Modal>
 }
 

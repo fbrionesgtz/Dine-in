@@ -24,7 +24,7 @@ const Cart = (props) => {
 
     const mealsInCart = (
         cartCtx.items.length < 1 ? <p className={styles["empty-cart"]}>Your cart is empty</p> :
-            <ul className={styles["cart-items"]}>
+            <ul className={`${!showCheckOut ? styles["cart-items"] : `${styles["cart-items"]} ${styles.showCheckOut}`}`}>
                 {cartCtx.items.map(meal => (
                     <CartItem
                         key={meal.id}

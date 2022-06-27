@@ -1,0 +1,4 @@
+.orderList {
+    max-height: 25rem;
+    overflow-y: scroll;
+}
